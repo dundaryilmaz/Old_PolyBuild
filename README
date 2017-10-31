@@ -1,0 +1,63 @@
+#-------------------------------------------------------------------------------
+#                                                                              |
+#             POLYMER BUILDER INSTALLATION AND USAGE MANUAL                    |
+#                                                                              |
+#-------------------------------------------------------------------------------
+
+
+  COMPILING
+
+  Two makefiles provided for gfortran and intel fortran compilers. These are
+  Makefile.gfortran      : Makefile for gcc/gfortran compilers.
+  Makefile.ifort         : Makefile for intel fortran compilers.
+
+  Enter the source directory:
+
+  cd Src
+
+  Copy appropriate make file to file name makefile:
+
+   cp Makefile.gfortran makefile
+
+  Clean the source directory:
+  
+   make clean
+  
+  Compile the source code:
+
+   make
+
+  This will create an executable file " polybuild " and it will copy this file to the test folder
+
+   cp polybuild ../Test
+ 
+  and  copy polybuild to local bin folder if it exist:
+
+   cp polybuild ~/bin/
+  
+  That completes building the source code.
+
+
+  USAGE:
+ 
+  Polybuild will need a configuration file which should be supplied via command line to execute:
+
+  polybuild config.cb
+
+  Configuration file contains setup information for the polybuild.
+
+  There are three modes of the program.
+
+  1- Polymer Building Mode
+
+  2- Composite Building Mode
+
+  3- Fiber Building Mode
+
+  These three modes can be combined except composite and fiber modes. Fiber modes can only be combined with Polymer mode.
+
+  1- Polymer Building Mode:
+
+  	
+
+

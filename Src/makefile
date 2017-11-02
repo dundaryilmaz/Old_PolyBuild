@@ -1,7 +1,3 @@
-# FMKMF_F90 not set: using f90
-# FMKMF_SFTAG not set: using f90
-# FMKMF_SPATH not set: using . 
-# FMKMF_LINKOPTS not set: using no link options 
 # Main program is main.f90 
 # process_fsource called with arg main.f90 
 # main.f90 Uses Module statistics

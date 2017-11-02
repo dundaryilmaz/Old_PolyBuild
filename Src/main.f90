@@ -4,9 +4,9 @@ program polybuild
 !   COMPOSITE POLYMER/OXIDE BUILDER
 !
 !       DUNDAR YILMAZ
-!       ZIRVE UNIVERSITY
-!       FACULTY OF ENGINEERING
-!   BASED ON Travis Kemper's Polymer Builder
+!       
+!    
+!   
 !
 !------------------------------------------------------------------------------------
    use global_variables

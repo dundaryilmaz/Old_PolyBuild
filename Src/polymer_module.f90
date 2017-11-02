@@ -343,7 +343,7 @@ end do
                    return
                end if
            else
-               if( dist < mer_width ) then !cos(15)ง
+               if( dist < mer_width ) then !cos(15)ยง
                    folded=.TRUE.
                      !print*,' dist 2 ' , i,dist
                end if

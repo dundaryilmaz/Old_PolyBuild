@@ -50,56 +50,13 @@ contains
      call word_next_read(cline,word,done)
      read(word,*) monomer_file
      iostat=base_mer%create(monomer_file)
-     !base_mer%n_mer_atoms=n_mer_atoms
-     !call word_next_read(cline,word,done)
-     !call word_next_read(cline,word,done)
-     !base_mer%monomer_name=word
-
-!     allocate(base_mer%atype(n_mer_atoms),&
-!&       base_mer%symbol(n_mer_atoms), &
-!&       base_mer%mass(n_mer_atoms), &
-!&       base_mer%coord(n_mer_atoms,3))
      write(*,'(A,x,A)') 'Monomer name :' , base_mer%monomer_name
      write(12,'(A,x,A)') 'Monomer name :' , base_mer%monomer_name
      write(*,'(A,x,i2)') 'Number of atoms in monomer : ',n_mer_atoms
      write(12,'(A,x,i2)') 'Number of atoms in monomer : ',n_mer_atoms
-!       read(11,'(A80)') cline
-!       done=.true.
-!       call word_next_read(cline,word,done)
-!       if( word .eq. 'vector1') then
-!         call word_next_read(cline,word,done)
-!         read(word,*)base_mer%base_vecs(1,1)
-!         call word_next_read(cline,word,done)
-!         read(word,*)base_mer%base_vecs(1,2)
-!         call word_next_read(cline,word,done)
-!         read(word,*)base_mer%base_vecs(1,3)
-!       end if
-!       read(11,'(A80)') cline
-!       done=.true.
-!       call word_next_read(cline,word,done)
-!       if( word .eq. 'vector2') then
-!         call word_next_read(cline,word,done)
-!         read(word,*)base_mer%base_vecs(2,1)
-!         call word_next_read(cline,word,done)
-!         read(word,*)base_mer%base_vecs(2,2)
-!         call word_next_read(cline,word,done)
-!         read(word,*)base_mer%base_vecs(2,3)
-!       end if
-       !  write(*,'(A,x,3f8.4)')' Base Vector - 1 :',base_mer%base_vecs(1,:)
          write(12,'(A,x,3f8.4)')' Base Vector - 1 :',base_mer%base_vecs(1,:)
-       !  write(*,'(A,x,3f8.4)')' Base Vector - 2 :',base_mer%base_vecs(2,:)
          write(12,'(A,x,3f8.4)')' Base Vector - 2 :',base_mer%base_vecs(2,:)
-!     do i=1,base_mer%n_mer_atoms
-!       read(11,*)base_mer%symbol(i),base_mer%coord(i,1:3),base_mer%atype(i)
-       !write(*,'(i2,x,A2,x,3f8.4)')i,base_mer%symbol(i),base_mer%coord(i,1:3)
-!       write(12,'(i2,x,A2,x,3f8.4)')i,base_mer%symbol(i),base_mer%coord(i,1:3)
-!     end do
-!       read(11,*) word,base_mer%headc,base_mer%headh(:)
-!       read(11,*) word,base_mer%tailc,base_mer%tailh(:)
-!	   read(11,*) word, mer_width
-      ! write(*,'(A,3f8.4)')'Head ', base_mer%headh
        write(12,'(A,3f8.4)')'Head ', base_mer%headh
-      ! write(*,'(A,3f8.4)')'Tail ', base_mer%tailh
        write(12,'(A,3f8.4)')'Tail ', base_mer%tailh
 	   write(*,'(A,f8.4)') 'Mer Width is :',mer_width
    end if
@@ -113,6 +70,10 @@ contains
      write(*,'(A,x,3f8.2)') 'Simulation Box : ',BOX(1:3)
      write(12,'(A,x,3f8.2)') 'Simulation Box : ',BOX(1:3)
    end if
+   !--------------------------------------------------------
+   !  Blocks
+   !--------------------------------------------------------
+   
    if ( word .eq. 'blocks') then
      call word_next_read(cline,word,done)
      read(word,*) n_boxes
@@ -159,19 +120,7 @@ contains
 	   do i=1,n_def_groups
 		read(11,*) def_block(i),def_symbol(i),def_type(i),n_defects(i),def_treshold(i)
        end do
-       ! call word_next_read(cline,word,done)
-       ! read(word,*) def_block(i)
-       ! call word_next_read(cline,word,done)
-       ! read(word,*) def_symbol(i)
-       ! call word_next_read(cline,word,done)
-       ! read(word,*) def_type(i)
-       ! call word_next_read(cline,word,done)
-       ! read(word,*) n_defects(i)
    end if
-!   if( word .eq. 'merlength') then
-!     call word_next_read(cline,word,done)
-!     read(word,*) base_mer%mer_length
-!   end if
    if ( word .eq. 'amorph_chain') then
      call word_next_read(cline,word,done)
      read(word,*) n_amorph_chains
@@ -265,16 +214,13 @@ contains
     ! Create Amorphous Chains
 	!------------------------------------------
     if ( n_amorph_chains .gt. 0  ) then
-      !write(*,'(A)') 'Amorphous chains will be created '
       do i=n_cont_chains+1,n_cont_chains+n_amorph_chains
-        !print*, i,' th chain', mers_per_chain , ' mers '
         chains(i)=create_chain(mers_per_chain,i)
-          total_penalty=self_chain_interaction(chains(i))
+        total_penalty=self_chain_interaction(chains(i))
 
       end do
 	  write(*,"(i3,x,'Amorphous Chains Created')") n_amorph_chains
       else
-      !write(*,'(A)') 'No amorphous chains will be created'
     end if
 	!------------------------------------------
 	if( nanoparticle_mode) then

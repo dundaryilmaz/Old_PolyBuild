@@ -150,20 +150,16 @@ contains
    do i=3,n_beads
        ! check wheater it is inside voids
        ! get a random unit vector
-!	   write(*,'(A,i4)') 'Inserting bead :',i
 100    vec=random_unit_vec()
        cnt_interchain=cnt_interchain+1
        ! scale with mer length
        vec=vec*base_mer%mer_length
        new_pos=vec+new_chain%coord(i-1,:)
 	   vectemp=new_pos
-	   !new_pos=return_box(new_pos)
        !chain angle
-!       if( pbc_dist(new_pos,new_chain%coord(i-2,:)) < 1.53d0* base_mer%mer_length )then
        dist_prev= pbc_dist(new_pos,new_chain%coord(i-2,:)) 
        if(dist_prev < 1.53d0* base_mer%mer_length )then
            if( cnt_interchain > 10000) then
-       !        print*,'Trying beads'
                cnt_second_bead=0
                cnt_interchain=0
                if( new_chain%functional ) then
@@ -176,41 +172,16 @@ contains
        end if
        !check for box
        p=insidevoids_buff(new_pos)
-       !new_pos=return_box(new_pos)
-       !print*,cnt_interchain
        new_chain%coord(i,:)=new_pos
        if( p .eq. 0 ) goto 100
-       !pause '6'
-       !	    if( cnt_interchain > 1000) then
-       !	      rescale=0.75+exp((1000.d0-dble(cnt_interchain))/10000.d0)/4.d0
-       ! print*,cnt_interchain,rescale,nth_chain,i
-       !stop
-       !	     end if
        rescale=scaler(cnt_interchain)
 
        if( check_distance_within_chain(new_chain,i)) goto 100
        if( check_distance_with_allchains(new_chain,i,rescale)) goto 100
-	   !write(*,1000)i,n_beads
-	   !write(*,*) 'Bead :',i,dist_prev
-	   !pause 'end'
-!	   if( dot_product(new_pos-vectemp,new_pos-vectemp) .gt. 0.d0) then
-!	     write(*,'(A,3f8.2,x,A,3f8.2)') 'Prev bead :',new_chain%coord(i-1,:),&
-!&		 		'Current chain ',new_chain%coord(i,:)
-!       end if
-       !new_pos=return_box(new_pos)
-       !new_chain%coord(i,:)=new_pos
    end do
 
    if( present(success) ) success=.TRUE.
-		!   print*,'Created'
-		!   pause
-!		do i=1,n_beads
-!		  new_pos=new_chain%coord(i,:)
-!		  new_pos=return_box(new_pos)
-!		  new_chain%coord(i,:)=new_pos
-!		end do
 
-		print*, new_chain%coord(1,:)
    end function create_chain
 !------------------------------------------------------------------------
    function parallel_chain_create(s_c,n_chains,n_mers) result(iostat)
@@ -343,7 +314,7 @@ end do
                    return
                end if
            else
-               if( dist < mer_width ) then !cos(15)ยง
+               if( dist < mer_width ) then !cos(15)ง
                    folded=.TRUE.
                      !print*,' dist 2 ' , i,dist
                end if

@@ -25,3 +25,29 @@ R_c= h * R_f
 Here h stands for h-matrix and R_f and R_c are fractional and cartesian coordinates.
 
 Following lines define positions of atoms. First column is the atom type. Columns 2 to 5 are fractional coordinates. 6th column is again atom type. 7th and 8th columns are element symbol and mass respectively. Here atom type definition is for LAMMPS only. LAMMPS labels atoms with type indices defined at the input script. For example if you are running a simulation which contains Mo , O, S atoms you may label these three elements as 1,2,3 in the force field definition. Then you need to set same labels in your unit cell file in order to generate compatible format.
+
+Defining Crystal Regions in Simulation Box
+
+Defining regions to be filled with crystal structures within the simulation box set up with "blocks" keyword at the input script.
+
+blocks    2
+0.0 0.0 10.0 52.0 64.0 28.0 2.0 mos2.ucell  
+0.0 0.0 50.0 52.0 64.0 15.0 2.0 graphene.ucell
+
+Here number following blocks keyword defines number of regions to be filled with crystal structures. The definitions of these regions followed by this line. With this setup after reading blocks keyword, polybuild will expect two lines to setup crystal regions. Currently polybuild support only rectangular prisms as crystal regions. First three floating numbers define the lower left corner of the region. Next three numbers define length of the region in each direction. Finally last floating point number defines width of the buffer region between the crystal region and polymer structures. According to this example polybuild will avoid placing polymers within 2 A buffer region as well as the crystal structure regions. Buffer width followed by the file name which contains unitcell definitions.
+
+Lattice Mismatch
+Starting from the origin of each box, polybuild places unitcells defined in the unitcell file, to fill the region. Number of unit cells in each direction calculated by dividing box length to lattice constant:
+
+N_unitcell_x=NINT(Boxlength_x/h_xx)
+
+If boxlength is integer multiple of lattice constant polybuild will place accordingly. However if it is not polybuild will match the lattice constant to fit into box. For example lets assume box length in x direction is 110A and the lattice constant h_xx=9.8A.
+NINT ( nearest integer ) function will yield:
+N_unitcell_x=NINT(110/9.8)=NINT(11.22)=11
+Polybuild will fit 11 unitcells in x direction by changing lattice constant accordingly:
+h_xx_new=Boxlength_x/N_unitcell_x=110/11=10A.
+This corresponds to a tensile strain applied in x direction with amount of e_x=(10.0-9.8)/9.8*100= %2.
+This feature is really helpfull in building multiple crystal structures as layered configuration. Assume that you are building a composite material consists of two layers of crystal regions. Layers stacked in z direction and periodic boundary conditions applied in x and y directions. In this case you need to find common dimensions in x and y directions to have minumum amount of strain on each layer. For such systems polybuild automatically adjust unitcells by calculating required stress on each structure.
+
+
+

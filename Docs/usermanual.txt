@@ -1,0 +1,31 @@
+Polybuild User Manual
+
+1- Compile and Install
+Compiling chrpak and geometry libraries.
+There are two external libraries requierd to compile polybuild. source code is also located at the Libraries folder.
+If lcharpak.a and lgeometry.a files are not compatible with your system you need to compile these two libraries from the source code.
+
+Creating lchrpak.a and lgeometry.a:
+To create the library file first you need to compile f90split.f90
+
+gfortran f90split.f90 -o f90split
+
+Make the shell script chrpak.sh executable:
+chmod +x chrpak.sh
+Run the shell script :
+./chrpak.sh
+
+Creating lgeometry.a is similar. You need to run shell script geometry.sh this time.
+chmod +x geometry.sh
+./geometry.sh
+
+
+Compiling polybuild is easy. Default compiler is Intel Fortran. In the makefile setting
+F90=gfortran 
+will set the GNU/Gfortran as the Fortran compiler. For best results gcc version > 5.0 recommended.
+
+Change the directory to Src
+cd Src
+Compile the source codes with:
+make.
+If everything goes well you should have the executable polybuild.

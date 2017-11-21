@@ -52,14 +52,16 @@ contains
             do j=1,chains(i)%n_mers
                 do q=1,chains(i)%mers(j)%n_mer_atoms
                     temp=temp+chains(i)%mers(j)%deleted(q)
+           
                 end do
             end do
+             if ( chains(i)%chaintype .eq. 'amorph') temp=temp-2 ! add tail/head H atoms
         end do
         n_polymer_atoms=base_mer%n_mer_atoms*n_polymer_atoms-temp ! subtract deleted!
         n_total_atoms=n_polymer_atoms+n_ceramic_atoms+n_nanopartatoms
         maxtype=maxval(base_mer%atype(:))
         maxtypeo=max(maxtype,maxtypeo)
-        print*, maxtypeo
+        !print*, maxtypeo
 		if( n_polymer_atoms  > 0 ) &
 		write(*,'(A,x,i6)')'Polymer Atoms:',n_polymer_atoms
 		if( present(particle))&
@@ -141,6 +143,27 @@ contains
                     end if
                 end do
             end do
+                print*,chains(i)%chaintype
+            if ( chains(i)%chaintype .eq. 'amorph') then
+                cnt=cnt+1
+                write(144,1009) cnt,base_mer%htype, 0.d0, chains(i)%head(:)
+                rvec=chains(i)%head/box
+                write(145,'(f12.4)') 1.0
+                write(145,'(A3)') 'H '
+                write(145,'(4(f13.6,x))') rvec,1.d0
+                write(146,*) 'H  ',chains(i)%head(:)
+                write(147,205)'HETATM',cnt,'H  ','','','',chains(i)%head(:),'H  ',0,0,0.0
+
+                cnt=cnt+1
+                write(144,1009) cnt,base_mer%htype, 0.d0,chains(i)%tail(:)
+                rvec=chains(i)%tail/box
+                write(145,'(f12.4)') 1.0
+                write(145,'(A3)') 'H '
+                write(145,'(4(f13.6,x))') rvec,1.d0
+                write(146,*) 'H  ',chains(i)%tail(:)
+                write(147,205)'HETATM',cnt,'H  ','','','',chains(i)%tail(:),'H  ',0,0,0.0
+             end if
+                
         end do
 		if( present(particle))then
 		  cnt=cnt+1

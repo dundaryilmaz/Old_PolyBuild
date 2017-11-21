@@ -13,6 +13,7 @@ module polymer_type
         real*8 , dimension(2,3) :: base_vecs
         real*8  :: mer_length
         real*8 , dimension(3) :: HEADH, TAILH
+        integer :: htype
     contains 
         procedure , public :: create => read_monomer 
     end type
@@ -21,6 +22,7 @@ module polymer_type
         integer, allocatable , dimension(:) :: close_flag
         integer , allocatable , dimension(:) :: mer_flag
         logical  :: functional
+        integer :: htype
         character*6 :: chaintype
         real*8 , allocatable , dimension(:,:) :: coord
         real*8 , dimension(3) :: head,tail
@@ -62,8 +64,8 @@ contains
         do i=1, n_mer_atoms
           read(1234,*) this%symbol(i),this%coord(i,:),this%atype(i)
         end do
-        read(1234,*) dump, this%headc,this%headh(:)
-        read(1234,*) dump, this%tailc,this%tailh(:)
+        read(1234,*) dump, this%headc,this%headh(:), this%htype  ! headc= index of head carbon atom
+        read(1234,*) dump, this%tailc,this%tailh(:), this%htype  ! tailc= index of tail carbon atom
         read(1234,*) dump, mer_width
         read(1234,*) dump, this%mer_length
         iostat=0

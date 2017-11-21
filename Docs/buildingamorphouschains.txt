@@ -1,0 +1,5 @@
+Monomer File
+
+Similar to unitcells of crystal structures, polymers composed of monomers, thus we need to supply monomer information to polybuild.
+Monomers are building blocks of polymers. We can think of beads as monomers.
+Monomer file 

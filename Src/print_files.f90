@@ -143,7 +143,6 @@ contains
                     end if
                 end do
             end do
-                print*,chains(i)%chaintype
             if ( chains(i)%chaintype .eq. 'amorph') then
                 cnt=cnt+1
                 write(144,1009) cnt,base_mer%htype, 0.d0, chains(i)%head(:)

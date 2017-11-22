@@ -339,6 +339,14 @@ contains
 
     iostat=1
 	do i=1,n_chains
+         if (chains(i)%chaintype .eq. 'amorph') then
+                vec=chains(i)%tail
+                vec=return_box(vec)
+                chains(i)%tail=vec
+                vec=chains(i)%head
+                vec=return_box(vec)
+                chains(i)%head=vec
+        end if
 	 do q=1,chains(i)%n_mers
 	  do k=1,chains(i)%mers(q)%n_mer_atoms
 	    vec=chains(i)%mers(q)%coord(k,:)

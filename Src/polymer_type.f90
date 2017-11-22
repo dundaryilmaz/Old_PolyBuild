@@ -225,10 +225,12 @@ contains
               !add head hydrogen to head c
             !  print*,'Tail Vec : ', vectemp
             !  print*,' Distance to C ', sqrt(dot_product(vectemp,vectemp))
+              this%tail(:)=this%mers(nth)%coord(base_mer%tailc,:)+vectemp
               this%tail(:)=this%coord(nth,:)+vectemp
-              vectemp=this%tail(:)-this%mers(nth)%coord(base_mer%tailc,:)
-            !  print*,'Second C : ', this%mers(nth)%coord(base_mer%tailc,:)
-            !  print*,'Tail H ', this%tail(:)
+           !   vectemp=this%tail(:)-this%mers(nth)%coord(base_mer%tailc,:)
+           !   print*,'Second C : ', this%mers(nth)%coord(base_mer%tailc,:)
+           !   print*,'Tail H ', this%mers(nth)%coord(base_mer%tailc,:)+vectemp
+           !   print*,'Last Coord' ,this%tail(:)
             !  print*,'dist to second c ', vecmag(vectemp)
            end if
 

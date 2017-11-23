@@ -38,7 +38,6 @@ contains
   !n_defects=0
 100  read(11,'(A80)',end=101) cline
   if( cline(1:1) .eq. '#') goto 100
-!   indx=2
    n_words=0
    ilo=0
    ihi=0
